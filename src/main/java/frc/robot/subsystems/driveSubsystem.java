@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -43,10 +44,18 @@ public class driveSubsystem extends SubsystemBase {
     m_backRight.configFactoryDefault();
 
     /********CARDENAS EXPERIMENTATIONS*************/
+    //ramp rate
     m_frontLeft.configOpenloopRamp(DriveConstants.kRampTime);
     m_frontRight.configOpenloopRamp(DriveConstants.kRampTime);
     m_backLeft.configOpenloopRamp(DriveConstants.kRampTime);
     m_backRight.configOpenloopRamp(DriveConstants.kRampTime);
+
+    //stator limit
+    // m_frontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    // m_frontRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    // m_backLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    // m_backRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+
 
   }
 
