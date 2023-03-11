@@ -42,7 +42,7 @@ public final class Constants {
       mWheelDiameterMeters * Math.PI /
           (mGearRatio * mEncoderCPR);
 
-    public static final double kRampTime = 1.5;
+    public static final double kRampTime = 0.1;
   }
 
   public static final class AutoConstants{
@@ -54,15 +54,15 @@ public final class Constants {
     public static final double kAutoShortDistance = 1;
   }
   public static final class SpeedConstants{
-    public static final double mturnSpeed = 0.7;
-    public static final double driveSpeed = 0.9;
+    public static final double mturnSpeed = 0.6;
+    public static final double driveSpeed = 0.80;
     public static final double mHalfSpeed = 0.5;
 
     public static final double mLiftSpeed = 0.6;
     public static final double mLiftDownSpeed = 0.4;
     public static final double mArmSpeed = 1.0;
     public static final double mVclawSpeed = 0.8;
-    public static final double mVclawSpitSpeed = 0.5;
+    public static final double mVclawSpitSpeed = 0.3;
     public static final double mUclawSpeed = 0.8;
   }
   public static final class MechConstants{
@@ -75,7 +75,7 @@ public final class Constants {
     //Cclaw port
     public static final int m_UclawPort = 8;
     //switches
-    public static final int mArmDownSwitch = 4; 
+    public static final int mArmDownSwitch = 5; 
     public static final int m_armSwitchUp = 3; 
     public static final int m_liftHighSwitch = 0; 
     public static final int m_liftMidSwitch = 1;  

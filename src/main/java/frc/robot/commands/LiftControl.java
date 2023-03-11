@@ -35,6 +35,7 @@ public class LiftControl extends CommandBase {
     } else{
       m_lift.liftRun(-SpeedConstants.mLiftSpeed);
     }
+
   }
 
   // Called once the command ends or is interrupted.

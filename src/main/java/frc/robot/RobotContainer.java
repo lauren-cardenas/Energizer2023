@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -77,7 +78,7 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
       new RunCommand(() -> m_robotDrive.arcadeDrive(
         ((m_driverController.getRightTriggerAxis()
-        - m_driverController.getLeftTriggerAxis())) * SpeedConstants.driveSpeed,
+        - m_driverController.getLeftTriggerAxis())),
         -m_driverController.getLeftX() * SpeedConstants.mturnSpeed
       ), m_robotDrive));
 
@@ -99,7 +100,11 @@ public class RobotContainer {
 
       m_driverController.a()
         .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.mHalfSpeed), m_robotDrive))
-        .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(1.0), m_robotDrive));
+        .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
+
+      m_driverController.y()
+        .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(1.0), m_robotDrive))
+        .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
     
     /*
      //Uclaw In 'A' Button
@@ -124,9 +129,10 @@ public class RobotContainer {
           new LiftControl("In", m_lift)));
 
     //Lift Deliver Mid 'B'
+    
       m_operatorController.b()
         .onTrue(new LiftControl("Mid", m_lift))
-       .onFalse(new SequentialCommandGroup(
+        .onFalse(new SequentialCommandGroup(
           new ArmControlUp(m_arm)
             .withTimeout(0.5),
           new LiftControl("In", m_lift)));
@@ -154,7 +160,7 @@ public class RobotContainer {
     //Vclaw In 'DownDPad' Button
       m_operatorController.povDown() 
       .onTrue(Commands.runOnce(() -> m_Vclaw.VclawRun(SpeedConstants.mVclawSpeed), m_Vclaw))
-      .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun (0.0), m_Vclaw));
+      .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun (0.1), m_Vclaw));
 
     //Vclaw Out 'UpDPad' Button
       m_operatorController.povUp() 
