@@ -47,11 +47,15 @@ public final class Constants {
 
   public static final class AutoConstants{
     public static final double kAutoTurnSpeed = 0.45;
-    public static final double kAutoForwardSpeed = 0.5;
-    public static final double kAutoReverseSpeed = -0.5;
+    public static final double kAutoForwardSpeed = -0.5;
+    public static final double kAutoReverseSpeed = 0.5;
 
-    public static final double kAutoLongDistance = 2;
-    public static final double kAutoShortDistance = 1;
+    public static final double kAutoLongDistance = 4;
+    public static final double kAutoShortDistance = 2.5;
+
+    public static final double kLevelAngle = -2;
+    public static final double kReverseClimbAngle = -8.0;
+    public static final double kForwardClimbAngle = 8.0;
   }
   public static final class SpeedConstants{
     public static final double mturnSpeed = 0.6;
@@ -62,7 +66,8 @@ public final class Constants {
     public static final double mLiftDownSpeed = 0.4;
     public static final double mArmSpeed = 1.0;
     public static final double mVclawSpeed = 0.8;
-    public static final double mVclawSpitSpeed = 0.3;
+    public static final double mVclawSpitSpeed = 0.25;
+    public static final double mVclawCubeSpeed = 0.9;
     public static final double mUclawSpeed = 0.8;
   }
   public static final class MechConstants{

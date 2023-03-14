@@ -26,11 +26,12 @@ public class ScoreCone extends SequentialCommandGroup {
       new ArmControlDown(arm)
         .alongWith(new LiftControl(liftPosition, lift)),
       Commands.waitSeconds(0.5),
-      Commands.runOnce(() -> Vclaw.VclawRun(SpeedConstants.mVclawSpeed), Vclaw),
+      Commands.runOnce(() -> Vclaw.VclawRun(-SpeedConstants.mVclawSpitSpeed), Vclaw),
       Commands.waitSeconds(1),
       new ArmControlUp(arm)
-        .alongWith(new LiftControl("In", lift))
         .alongWith(Commands.runOnce(() -> Vclaw.VclawRun(0.0), Vclaw))
+        .alongWith(new LiftControl("In", lift)).raceWith(Commands.waitSeconds(0.5))
+        
     );
   }
 }

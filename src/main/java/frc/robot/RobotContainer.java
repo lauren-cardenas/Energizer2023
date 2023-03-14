@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -18,7 +19,9 @@ import frc.robot.commands.ArmControlDown;
 import frc.robot.commands.ArmControlUp;
 import frc.robot.commands.LiftControl;
 import frc.robot.commands.autos.DriveDistanceCommand;
+import frc.robot.commands.autos.DriveToPitch;
 import frc.robot.commands.autos.ScoreCone;
+import frc.robot.commands.autos.autoGetOnCharge;
 import frc.robot.commands.autos.autoScoreDrive;
 import frc.robot.subsystems.UclawSubsystem;
 import frc.robot.subsystems.VclawSubsystem;
@@ -68,6 +71,9 @@ public class RobotContainer {
 
   private final Command m_simpleDriveAuto =
     new DriveDistanceCommand(AutoConstants.kAutoShortDistance, AutoConstants.kAutoForwardSpeed, m_robotDrive);
+
+  private final Command m_TESTANGLE =
+    new autoGetOnCharge("Reverse", 0.4, m_robotDrive);
  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -89,6 +95,9 @@ public class RobotContainer {
     autoChooser.addOption("Close_Cube", m_scoreCubeDriveCloseAuto);
     autoChooser.addOption("OnlyDeliver", m_simpleDeliverAuto);
     autoChooser.addOption("OnlyDrive", m_simpleDriveAuto);
+    autoChooser.addOption("TEST", m_TESTANGLE);
+
+    SmartDashboard.putData("Autonomous", autoChooser);
 
    
   }
@@ -165,6 +174,11 @@ public class RobotContainer {
     //Vclaw Out 'UpDPad' Button
       m_operatorController.povUp() 
       .onTrue(Commands.runOnce(() -> m_Vclaw.VclawRun(-SpeedConstants.mVclawSpitSpeed), m_Vclaw))
+      .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun(0.0), m_Vclaw));
+
+    //Vclaw Out 'RightDPad' Button
+      m_operatorController.povRight() 
+      .onTrue(Commands.runOnce(() -> m_Vclaw.VclawRun(-SpeedConstants.mVclawCubeSpeed), m_Vclaw))
       .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun(0.0), m_Vclaw));
     
   }

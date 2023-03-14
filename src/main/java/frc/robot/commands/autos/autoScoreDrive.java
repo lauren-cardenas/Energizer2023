@@ -7,6 +7,7 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.commands.LiftControl;
 import frc.robot.subsystems.VclawSubsystem;
 import frc.robot.subsystems.armSubsystem;
 import frc.robot.subsystems.driveSubsystem;
@@ -23,8 +24,9 @@ public class autoScoreDrive extends SequentialCommandGroup {
 
     addCommands(
       new ScoreCone(position, lift, arm, vclaw), //score game piece
-      new DriveDistanceCommand(distance, AutoConstants.kAutoReverseSpeed, drive) //drive backwards FIXME neg/pos distance
-        .raceWith(Commands.waitSeconds(3)), //times out at 3 seconds
+      new DriveDistanceCommand(-distance, AutoConstants.kAutoReverseSpeed, drive)
+        .alongWith(new LiftControl("In", lift)) //drive backwards
+        .raceWith(Commands.waitSeconds(10)), //times out at 3 seconds
       Commands.runOnce(() -> drive.arcadeDrive(0, 0), drive)
     );
   }

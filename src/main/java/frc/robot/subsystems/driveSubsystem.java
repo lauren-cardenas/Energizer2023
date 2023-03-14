@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.SpeedConstants;
 
 public class driveSubsystem extends SubsystemBase {
   /** Creates a new driveSubsystem. */
@@ -25,7 +27,7 @@ public class driveSubsystem extends SubsystemBase {
   private final MotorControllerGroup m_leftMotors = new MotorControllerGroup(m_frontLeft, m_backLeft);
   private final MotorControllerGroup m_rightMotors = new MotorControllerGroup(m_frontRight, m_backRight);
 
-  private final Gyro m_gyro = new AHRS(SPI.Port.kMXP);
+  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
   
@@ -34,6 +36,8 @@ public class driveSubsystem extends SubsystemBase {
     m_rightMotors.setInverted(true);
 
     m_drive.setSafetyEnabled(false);
+
+    m_drive.setMaxOutput(SpeedConstants.driveSpeed);
 
     m_gyro.reset();
     
@@ -50,11 +54,17 @@ public class driveSubsystem extends SubsystemBase {
     m_backLeft.configOpenloopRamp(DriveConstants.kRampTime);
     m_backRight.configOpenloopRamp(DriveConstants.kRampTime);
 
+    m_frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
+    m_frontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
+    m_backLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
+    m_backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
+
+
     //stator limit
-    // m_frontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
-    // m_frontRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
-    // m_backLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
-    // m_backRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    m_frontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    m_frontRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    m_backLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    m_backRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
 
 
   }
@@ -68,6 +78,7 @@ public class driveSubsystem extends SubsystemBase {
   public void arcadeDrive(double fwd, double rot){
     m_drive.arcadeDrive(fwd, rot);
     displayEncoderValues();
+    displayGyroPitch();
   }
 
   public void tankDrive(double left, double right){
@@ -94,6 +105,10 @@ public class driveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Data", getLeftWheelPosition());
   }
 
+  public void displayGyroPitch(){
+    SmartDashboard.putNumber("Pitch Angle", m_gyro.getRoll());
+  }
+
   private double getLeftWheelPosition() {
     return (m_frontLeft.getSelectedSensorPosition() * DriveConstants.mWheelDiameterMeters * Math.PI
     / DriveConstants.mEncoderCPR) / DriveConstants.mGearRatio;
@@ -110,6 +125,10 @@ public class driveSubsystem extends SubsystemBase {
 
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
+  }
+
+  public double getPitch(){
+    return m_gyro.getRoll();
   }
 
   public void setMaxSpeed(double speed){
