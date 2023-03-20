@@ -72,8 +72,14 @@ public class RobotContainer {
   private final Command m_simpleDriveAuto =
     new DriveDistanceCommand(AutoConstants.kAutoShortDistance, AutoConstants.kAutoForwardSpeed, m_robotDrive);
 
-  private final Command m_TESTANGLE =
-    new autoGetOnCharge("Reverse", 0.4, m_robotDrive);
+  private final Command m_scoreMidDriveFarAuto =
+    new autoScoreDrive("Mid", AutoConstants.kAutoLongDistance, m_robotDrive, m_lift, m_arm, m_Vclaw);
+
+  private final Command m_scoreMidDriveCloseAuto =
+    new autoScoreDrive("Mid", AutoConstants.kAutoShortDistance, m_robotDrive, m_lift, m_arm, m_Vclaw);
+
+  private final Command m_scoreHighChargeCone =
+    new autoGetOnCharge("Reverse", 0.5, m_robotDrive, m_lift, m_arm, m_Vclaw);
  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -93,9 +99,11 @@ public class RobotContainer {
     autoChooser.addOption("Close_Cone", m_scoreHighDriveCloseAuto);
     autoChooser.addOption("Far_Cube", m_scoreCubeDriveFarAuto);
     autoChooser.addOption("Close_Cube", m_scoreCubeDriveCloseAuto);
+    autoChooser.addOption("Mid_Far_Cone", m_scoreMidDriveFarAuto);
+    autoChooser.addOption("Mid_Close_Cone", m_scoreMidDriveCloseAuto);
     autoChooser.addOption("OnlyDeliver", m_simpleDeliverAuto);
     autoChooser.addOption("OnlyDrive", m_simpleDriveAuto);
-    autoChooser.addOption("TEST", m_TESTANGLE);
+    autoChooser.addOption("High_Cone_Chargeh", m_scoreHighChargeCone);
 
     SmartDashboard.putData("Autonomous", autoChooser);
 

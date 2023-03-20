@@ -43,6 +43,16 @@ public final class Constants {
           (mGearRatio * mEncoderCPR);
 
     public static final double kRampTime = 0.1;
+
+    public static final double kCurrentLimit = 45;
+    public static final double kCurrentThreshold = 55;
+    public static final double kLimitTime = 2;
+    public static final boolean kSupplyEnable = true;
+    public static final boolean kStatorEnable = true;
+    public static final double kStatorLimit = 15;
+    public static final double kStatorThreshold = 20;
+    public static final double kStatorTime = 0.5;
+
   }
 
   public static final class AutoConstants{
@@ -53,13 +63,13 @@ public final class Constants {
     public static final double kAutoLongDistance = 4;
     public static final double kAutoShortDistance = 2.5;
 
-    public static final double kLevelAngle = -2;
-    public static final double kReverseClimbAngle = -8.0;
-    public static final double kForwardClimbAngle = 8.0;
+    public static final double kLevelAngle = -7;
+    public static final double kReverseClimbAngle = -10.0;
+    public static final double kForwardClimbAngle = 10.0;
   }
   public static final class SpeedConstants{
-    public static final double mturnSpeed = 0.6;
-    public static final double driveSpeed = 0.80;
+    public static final double mturnSpeed = 0.85; //0.6;
+    public static final double driveSpeed = 0.9;
     public static final double mHalfSpeed = 0.5;
 
     public static final double mLiftSpeed = 0.6;

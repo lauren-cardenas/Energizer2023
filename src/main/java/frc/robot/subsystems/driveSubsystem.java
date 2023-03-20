@@ -47,24 +47,25 @@ public class driveSubsystem extends SubsystemBase {
     m_backLeft.configFactoryDefault();
     m_backRight.configFactoryDefault();
 
+
     /********CARDENAS EXPERIMENTATIONS*************/
     //ramp rate
-    m_frontLeft.configOpenloopRamp(DriveConstants.kRampTime);
-    m_frontRight.configOpenloopRamp(DriveConstants.kRampTime);
-    m_backLeft.configOpenloopRamp(DriveConstants.kRampTime);
-    m_backRight.configOpenloopRamp(DriveConstants.kRampTime);
+    // m_frontLeft.configOpenloopRamp(DriveConstants.kRampTime);
+    // m_frontRight.configOpenloopRamp(DriveConstants.kRampTime);
+    // m_backLeft.configOpenloopRamp(DriveConstants.kRampTime);
+    // m_backRight.configOpenloopRamp(DriveConstants.kRampTime);
 
-    m_frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
-    m_frontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
-    m_backLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
-    m_backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,45,2));
+    m_frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(DriveConstants.kSupplyEnable,DriveConstants.kCurrentLimit,DriveConstants.kCurrentThreshold,DriveConstants.kLimitTime));
+    m_frontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(DriveConstants.kSupplyEnable,DriveConstants.kCurrentLimit,DriveConstants.kCurrentThreshold,DriveConstants.kLimitTime));
+    m_backLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(DriveConstants.kSupplyEnable,DriveConstants.kCurrentLimit,DriveConstants.kCurrentThreshold,DriveConstants.kLimitTime));
+    m_backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(DriveConstants.kSupplyEnable,DriveConstants.kCurrentLimit,DriveConstants.kCurrentThreshold,DriveConstants.kLimitTime));
 
 
     //stator limit
-    m_frontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
-    m_frontRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
-    m_backLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
-    m_backRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,45,2));
+    m_frontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(DriveConstants.kStatorEnable,DriveConstants.kStatorLimit,DriveConstants.kStatorThreshold,DriveConstants.kStatorTime));
+    m_frontRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(DriveConstants.kStatorEnable,DriveConstants.kStatorLimit,DriveConstants.kStatorThreshold,DriveConstants.kStatorTime));
+    m_backLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(DriveConstants.kStatorEnable,DriveConstants.kStatorLimit,DriveConstants.kStatorThreshold,DriveConstants.kStatorTime));
+    m_backRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(DriveConstants.kStatorEnable,DriveConstants.kStatorLimit,DriveConstants.kStatorThreshold,DriveConstants.kStatorTime));
 
 
   }
