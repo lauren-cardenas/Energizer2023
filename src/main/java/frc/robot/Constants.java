@@ -44,14 +44,14 @@ public final class Constants {
 
     public static final double kRampTime = 0.1;
 
-    public static final double kCurrentLimit = 45;
-    public static final double kCurrentThreshold = 55;
+    public static final double kCurrentLimit = 25;
+    public static final double kCurrentThreshold = 35;
     public static final double kLimitTime = 2;
     public static final boolean kSupplyEnable = true;
     public static final boolean kStatorEnable = true;
-    public static final double kStatorLimit = 15;
-    public static final double kStatorThreshold = 20;
-    public static final double kStatorTime = 0.5;
+    public static final double kStatorLimit = 25;
+    public static final double kStatorThreshold = 35;
+    public static final double kStatorTime = 2;
 
   }
 
@@ -68,11 +68,11 @@ public final class Constants {
     public static final double kForwardClimbAngle = 10.0;
   }
   public static final class SpeedConstants{
-    public static final double mturnSpeed = 0.85; //0.6;
+    public static final double mturnSpeed = 0.7; //0.6;
     public static final double driveSpeed = 0.9;
     public static final double mHalfSpeed = 0.5;
 
-    public static final double mLiftSpeed = 0.6;
+    public static final double mLiftSpeed = 0.8;
     public static final double mLiftDownSpeed = 0.4;
     public static final double mArmSpeed = 1.0;
     public static final double mVclawSpeed = 0.8;
