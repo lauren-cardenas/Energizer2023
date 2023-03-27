@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -16,19 +15,21 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SpeedConstants;
 import frc.robot.commands.ArmControlDown;
+import frc.robot.commands.ArmControlLoading;
 import frc.robot.commands.ArmControlUp;
 import frc.robot.commands.LiftControl;
+import frc.robot.commands.uClawPivot;
 import frc.robot.commands.autos.DriveDistanceCommand;
-import frc.robot.commands.autos.DriveToPitch;
 import frc.robot.commands.autos.ScoreCone;
 import frc.robot.commands.autos.autoGetOnCharge;
 import frc.robot.commands.autos.autoScoreDrive;
-import frc.robot.subsystems.UclawSubsystem;
 import frc.robot.subsystems.VclawSubsystem;
 import frc.robot.subsystems.armSubsystem;
 import frc.robot.subsystems.driveSubsystem;
 import frc.robot.subsystems.liftSubsystem;
 import frc.robot.subsystems.photonvisionSubsystem;
+import frc.robot.subsystems.uClawPivotSubsystem;
+import frc.robot.subsystems.uClawRollerSubsystem;
 
 
 /**
@@ -44,7 +45,8 @@ public class RobotContainer {
   private final liftSubsystem m_lift = new liftSubsystem();
   private final armSubsystem m_arm = new armSubsystem();
   private final VclawSubsystem m_Vclaw = new VclawSubsystem();
-  //private final UclawSubsystem m_Uclaw = new UclawSubsystem();
+  private final uClawPivotSubsystem m_uClawPivot = new uClawPivotSubsystem();
+  private final uClawRollerSubsystem m_UClawRoller = new uClawRollerSubsystem();
   private final photonvisionSubsystem m_photon = new photonvisionSubsystem();
 
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.mDriverControllerPort);
@@ -94,6 +96,7 @@ public class RobotContainer {
         -m_driverController.getLeftX() * SpeedConstants.mturnSpeed
       ), m_robotDrive));
 
+
     //Auto Choices
     autoChooser.setDefaultOption("Far_Cone", m_scoreHighDriveFarAuto);
     autoChooser.addOption("Close_Cone", m_scoreHighDriveCloseAuto);
@@ -115,48 +118,59 @@ public class RobotContainer {
 
     //*******************Driver*******************//
 
-      m_driverController.a()
-        .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.mHalfSpeed), m_robotDrive))
-        .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
+      // m_driverController.a()
+      //   .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.mHalfSpeed), m_robotDrive))
+      //   .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
 
-      m_driverController.y()
-        .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(1.0), m_robotDrive))
-        .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
+      // m_driverController.y()
+      //   .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(1.0), m_robotDrive))
+      //   .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
     
-    /*
-     //Uclaw In 'A' Button
-     m_driverController.a()
-     .onTrue(Commands.runOnce(() -> m_Uclaw.UclawRun(-SpeedConstants.mUclawSpeed), m_Uclaw))
-     .onFalse(Commands.runOnce(() -> m_Uclaw.UclawRun(0.0), m_Uclaw));
+    //U Claw Down
+      m_driverController.a()
+        .onTrue(new uClawPivot("Out", m_uClawPivot, m_UClawRoller))
+        .onFalse(new uClawPivot("In", m_uClawPivot, m_UClawRoller));
+    
+    //U Claw Aim
+      m_driverController.leftBumper()
+        .onTrue(new uClawPivot("Shoot", m_uClawPivot, m_UClawRoller))
+        .onFalse(new uClawPivot("In", m_uClawPivot, m_UClawRoller));
 
-     //Uclaw Out 'B' Button
-     m_driverController.b()
-     .onTrue(Commands.runOnce(() -> m_Uclaw.UclawRun(SpeedConstants.mUclawSpeed), m_Uclaw))
-     .onFalse(Commands.runOnce(() -> m_Uclaw.UclawRun(0.0), m_Uclaw));
-    */
+    //U Claw Shoot High
+      m_driverController.b()
+        .onTrue(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(SpeedConstants.mUclawSpitSpeed), m_UClawRoller))
+        .onFalse(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(0.0), m_UClawRoller));
+    
+    //U Claw Shoot Mid
+    m_driverController.x()
+    .onTrue(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(SpeedConstants.mUclawSpitMidSpeed), m_UClawRoller))
+    .onFalse(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(0.0), m_UClawRoller));
 
     //*******************Operator*******************//
 
+    //Lift
+      m_lift.setDefaultCommand(new RunCommand(() -> m_lift.liftRun(m_operatorController.getLeftY() * SpeedConstants.mLiftSpeed), m_lift));
+
     //Lift Deliver High 'Y'
       m_operatorController.y()
-        .onTrue(new LiftControl("High", m_lift))
+        .onTrue(new LiftControl("High", SpeedConstants.mLiftSpeed, m_lift))
         .onFalse(new SequentialCommandGroup(
           new ArmControlUp(m_arm)
             .withTimeout(0.5),
-          new LiftControl("In", m_lift)));
+          new LiftControl("In", SpeedConstants.mLiftDownSpeed, m_lift)));
 
     //Lift Deliver Mid 'B'
     
       m_operatorController.b()
-        .onTrue(new LiftControl("Mid", m_lift))
+        .onTrue(new LiftControl("Mid", SpeedConstants.mLiftSpeed, m_lift))
         .onFalse(new SequentialCommandGroup(
           new ArmControlUp(m_arm)
             .withTimeout(0.5),
-          new LiftControl("In", m_lift)));
+          new LiftControl("In", SpeedConstants.mLiftDownSpeed, m_lift)));
 
     //Lift Retract 'A'
       m_operatorController.a()
-        .onTrue(new LiftControl("In", m_lift))
+        .onTrue(new LiftControl("In", SpeedConstants.mLiftDownSpeed, m_lift))
         .onFalse(Commands.runOnce(() -> m_lift.liftRun(0.0), m_lift));
 
     //Lift Cancel 'X'
@@ -167,6 +181,11 @@ public class RobotContainer {
     //Arm Raise 'Right Bumper'
       m_operatorController.rightBumper()
         .onTrue(new ArmControlUp(m_arm))
+        .onFalse(Commands.runOnce(() -> m_arm.armRun(0.0), m_arm));
+
+    //Arm set to Loading Station
+      m_operatorController.leftBumper()
+        .onTrue(new ArmControlLoading(m_arm))
         .onFalse(Commands.runOnce(() -> m_arm.armRun(0.0), m_arm));
 
     //Arm Lower 'Right Trigger'

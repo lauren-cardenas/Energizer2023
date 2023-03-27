@@ -16,11 +16,15 @@ public class LiftControl extends CommandBase {
 
   private final liftSubsystem m_lift;
   private final String m_switch;
+  private final double m_speed;
 
-  public LiftControl(String position, liftSubsystem lift) {
+  public LiftControl(String position, double speed, liftSubsystem lift) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_lift = lift;
     m_switch = position;
+    m_speed = speed;
+
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -33,7 +37,7 @@ public class LiftControl extends CommandBase {
     if(m_switch == "In"){
       m_lift.liftRun(SpeedConstants.mLiftDownSpeed);
     } else{
-      m_lift.liftRun(-SpeedConstants.mLiftSpeed);
+      m_lift.liftRun(-m_speed);
     }
 
   }

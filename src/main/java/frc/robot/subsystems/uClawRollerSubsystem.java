@@ -7,20 +7,22 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechConstants;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class UclawSubsystem extends SubsystemBase {
+public class uClawRollerSubsystem extends SubsystemBase {
   /** Creates a new CclawSubsystem. */
-  WPI_VictorSPX m_Uclaw;
-  public UclawSubsystem() {
-    m_Uclaw = new WPI_VictorSPX (MechConstants.m_UclawPort);
+  CANSparkMax m_Uclaw;
+
+  public uClawRollerSubsystem() {
+    m_Uclaw = new CANSparkMax(MechConstants.m_uClawRollerPort, MotorType.kBrushless);
   }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void UclawRun(double speed){
-    m_Uclaw.set(-speed);
+  public void UclawRollerRun(double speed){
+    m_Uclaw.set(speed);
   }
   
 }

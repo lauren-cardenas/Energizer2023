@@ -14,6 +14,7 @@ public class armSubsystem extends SubsystemBase {
 
   private DigitalInput armSwitchDown = new DigitalInput(MechConstants.mArmDownSwitch);
   private DigitalInput armSwitchUp = new DigitalInput(MechConstants.m_armSwitchUp);
+  private DigitalInput armSwitchLoading = new DigitalInput(MechConstants.m_loadingSwitch);
  
   public armSubsystem() {
    m_arm = new WPI_VictorSPX(MechConstants.m_armPort);
@@ -38,6 +39,10 @@ public class armSubsystem extends SubsystemBase {
 
   public boolean getStatusDown(){
     return armSwitchDown.get();
+  }
+
+  public boolean getStatusLoading(){
+    return armSwitchLoading.get();
   }
 
 }

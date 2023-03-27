@@ -4,11 +4,12 @@
 
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
-
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class photonvisionSubsystem extends SubsystemBase {
@@ -27,6 +28,13 @@ public class photonvisionSubsystem extends SubsystemBase {
     var results = camera.getLatestResult();
     PhotonTrackedTarget target = results.getBestTarget();
     hasTarget = results.hasTargets();
+    // List<PhotonTrackedTarget> targets = results.getTargets();
+
+    // // Get information from target.
+    //   double yaw = target.getYaw();
+    //   double pitch = target.getPitch();
+    //   double area = target.getArea();
+    //   double skew = target.getSkew();
    
 
   }
@@ -36,8 +44,9 @@ public class photonvisionSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-//   public void printTest(){
-//     System.out.println(target.getYaw());
-// }
+  public void areaTest(){
+    SmartDashboard.putNumber("TargetArea", target.getArea());
+  }
+
 
 }

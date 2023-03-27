@@ -5,6 +5,7 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.SpeedConstants;
 import frc.robot.commands.ArmControlUp;
 import frc.robot.commands.LiftControl;
 import frc.robot.subsystems.VclawSubsystem;
@@ -24,7 +25,7 @@ public class autoGetOnCharge extends SequentialCommandGroup {
     addCommands(
       new ScoreCone("High", lift, arm, vclaw),
       new DriveToPitch(direction, robotSpeed, drive)
-        .alongWith(new LiftControl("In", lift))
+        .alongWith(new LiftControl("In", SpeedConstants.mLiftDownSpeed, lift))
         .withTimeout(10),
       new DriveToPitch("Level", 0.4, drive)
         .withTimeout(10),

@@ -51,7 +51,7 @@ public final class Constants {
     public static final boolean kStatorEnable = true;
     public static final double kStatorLimit = 25;
     public static final double kStatorThreshold = 35;
-    public static final double kStatorTime = 2;
+    public static final double kStatorTime = 3;
 
   }
 
@@ -72,13 +72,16 @@ public final class Constants {
     public static final double driveSpeed = 0.9;
     public static final double mHalfSpeed = 0.5;
 
-    public static final double mLiftSpeed = 0.8;
+    public static final double mLiftSpeed = 0.8; //0.6
     public static final double mLiftDownSpeed = 0.4;
     public static final double mArmSpeed = 1.0;
     public static final double mVclawSpeed = 0.8;
     public static final double mVclawSpitSpeed = 0.25;
     public static final double mVclawCubeSpeed = 0.9;
-    public static final double mUclawSpeed = 0.8;
+    public static final double mUclawInSpeed = 0.8;
+    public static final double mUclawSpitSpeed = 0.8;
+    public static final double mUclawSpitMidSpeed = 0.6;
+    public static final double mUClawPivotSpeed = 0.6;
   }
   public static final class MechConstants{
     // lift port 
@@ -89,12 +92,18 @@ public final class Constants {
     public static final int m_VclawPort = 7;
     //Cclaw port
     public static final int m_UclawPort = 8;
+    //Uclaw roller port
+    public static final int m_uClawRollerPort = 3;
     //switches
     public static final int mArmDownSwitch = 5; 
     public static final int m_armSwitchUp = 3; 
     public static final int m_liftHighSwitch = 0; 
     public static final int m_liftMidSwitch = 1;  
-    public static final int m_liftInSwitch = 2; 
+    public static final int m_liftInSwitch = 2;
+    public static final int m_loadingSwitch = 6;
+    public static final int m_pivotDownSwitch = 7;
+    public static final int m_pivotUpSwitch = 9;
+    public static final int m_pivotShootSwitch = 8;
 
   }
 
