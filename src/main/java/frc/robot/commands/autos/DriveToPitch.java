@@ -43,8 +43,10 @@ public class DriveToPitch extends CommandBase {
   public boolean isFinished() {
 
     switch (m_direction) {
-      case "Level":
+      case "LevelB":
         return (m_drive.getPitch()) >= AutoConstants.kLevelAngle;
+      case "LevelA":
+        return (m_drive.getPitch()) <= -AutoConstants.kLevelAngle;
       case "Reverse":
         return (m_drive.getPitch()) <= AutoConstants.kReverseClimbAngle;
       case "Forward":

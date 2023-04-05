@@ -56,6 +56,10 @@ public class RobotContainer {
 
   /***AUTO COMMANDS***/
 
+  private final SequentialCommandGroup m_scoreHighPickAuto =
+    new autoScoreDrive("High", AutoConstants.kAutoLongDistance, m_robotDrive, m_lift, m_arm, m_Vclaw).andThen(
+    new uClawPivot("Out", m_uClawPivot, m_UClawRoller));
+
   private final Command m_simpleDeliverAuto =
     new ScoreCone("High", m_lift, m_arm, m_Vclaw);
   
@@ -106,6 +110,7 @@ public class RobotContainer {
     autoChooser.addOption("Mid_Close_Cone", m_scoreMidDriveCloseAuto);
     autoChooser.addOption("OnlyDeliver", m_simpleDeliverAuto);
     autoChooser.addOption("OnlyDrive", m_simpleDriveAuto);
+    autoChooser.addOption("Far and Pick", m_scoreHighPickAuto);
     autoChooser.addOption("High_Cone_Chargeh", m_scoreHighChargeCone);
 
     SmartDashboard.putData("Autonomous", autoChooser);
@@ -126,26 +131,48 @@ public class RobotContainer {
       //   .onTrue(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(1.0), m_robotDrive))
       //   .onFalse(Commands.runOnce(() -> m_robotDrive.setMaxSpeed(SpeedConstants.driveSpeed), m_robotDrive));
     
-    //U Claw Down
-      m_driverController.a()
+    //U Claw Down Driver A
+      m_operatorController.x()
         .onTrue(new uClawPivot("Out", m_uClawPivot, m_UClawRoller))
         .onFalse(new uClawPivot("In", m_uClawPivot, m_UClawRoller));
     
-    //U Claw Aim
-      m_driverController.leftBumper()
+    //U Claw Aim Driver LB
+      m_operatorController.leftTrigger()
         .onTrue(new uClawPivot("Shoot", m_uClawPivot, m_UClawRoller))
         .onFalse(new uClawPivot("In", m_uClawPivot, m_UClawRoller));
 
-    //U Claw Shoot High
-      m_driverController.b()
+    //U Claw Shoot High Driver B
+      m_operatorController.start()
         .onTrue(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(SpeedConstants.mUclawSpitSpeed), m_UClawRoller))
         .onFalse(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(0.0), m_UClawRoller));
     
-    //U Claw Shoot Mid
-    m_driverController.x()
+    //U Claw Shoot Mid Driver X
+    m_operatorController.back()
     .onTrue(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(SpeedConstants.mUclawSpitMidSpeed), m_UClawRoller))
     .onFalse(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(0.0), m_UClawRoller));
+/* 
+ // Melvin's baller code that is still in testing, so Stay Tuned!!!
 
+ //With this method, it allows us to have the speeds for both the up and the down be able to be changed without needing separate buttons :)
+    if (m_operatorController.getLeftY() > .1){
+      new RunCommand(() -> m_UClawRoller.UclawRollerRun(m_operatorController.getRightY()* -SpeedConstants.mUclawInSpeed), m_UClawRoller);
+    }else if(m_operatorController.getLeftY() < -.1){
+      new RunCommand(() -> m_UClawRoller.UclawRollerRun(m_operatorController.getRightY()* SpeedConstants.mUclawInSpeed), m_UClawRoller);
+    }else{
+      new RunCommand(() -> m_UClawRoller.UclawRollerRun(0.0), m_UClawRoller);
+    }
+*/
+
+    /* Seniora Cardeenas Code
+    U Claw Roller Nudge
+    m_UClawRoller.setDefaultCommand(new RunCommand(() -> m_UClawRoller.UclawRollerRun(m_driverController.getRightY() * -SpeedConstants.mUclawInSpeed), m_UClawRoller));
+     m_driverController.rightBumper()
+     .onTrue(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(-SpeedConstants.mUclawInSpeed), m_UClawRoller))
+     .onFalse(Commands.runOnce(() -> m_UClawRoller.UclawRollerRun(0), m_UClawRoller));
+    */
+
+    m_UClawRoller.setDefaultCommand(new RunCommand(() -> m_UClawRoller.UclawRollerRun(m_operatorController.getRightY()* -SpeedConstants.mUclawInSpeed), m_UClawRoller));
+    
     //*******************Operator*******************//
 
     //Lift
@@ -174,9 +201,9 @@ public class RobotContainer {
         .onFalse(Commands.runOnce(() -> m_lift.liftRun(0.0), m_lift));
 
     //Lift Cancel 'X'
-      m_operatorController.x()
-        .onTrue(Commands.runOnce(() -> m_lift.liftRun(0.0), m_lift))
-        .onFalse(Commands.runOnce(() -> m_lift.liftRun(0.0), m_lift));
+      // m_operatorController.x()
+      //   .onTrue(Commands.runOnce(() -> m_lift.liftRun(0.0), m_lift))
+      //   .onFalse(Commands.runOnce(() -> m_lift.liftRun(0.0), m_lift));
     
     //Arm Raise 'Right Bumper'
       m_operatorController.rightBumper()
@@ -198,12 +225,12 @@ public class RobotContainer {
       .onTrue(Commands.runOnce(() -> m_Vclaw.VclawRun(SpeedConstants.mVclawSpeed), m_Vclaw))
       .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun (0.1), m_Vclaw));
 
-    //Vclaw Out 'UpDPad' Button
+    //Vclaw Out -- Cones 'UpDPad' Button
       m_operatorController.povUp() 
       .onTrue(Commands.runOnce(() -> m_Vclaw.VclawRun(-SpeedConstants.mVclawSpitSpeed), m_Vclaw))
       .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun(0.0), m_Vclaw));
 
-    //Vclaw Out 'RightDPad' Button
+    //Vclaw Out -- Cubes 'RightDPad' Button
       m_operatorController.povRight() 
       .onTrue(Commands.runOnce(() -> m_Vclaw.VclawRun(-SpeedConstants.mVclawCubeSpeed), m_Vclaw))
       .onFalse(Commands.runOnce(() -> m_Vclaw.VclawRun(0.0), m_Vclaw));
@@ -215,3 +242,97 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///doo doo feces

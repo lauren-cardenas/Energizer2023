@@ -30,7 +30,7 @@ public class autoScoreDrive extends SequentialCommandGroup {
         .alongWith(new LiftControl("In", SpeedConstants.mLiftDownSpeed, lift)) //drive backwards
         .raceWith(Commands.waitSeconds(10)), //times out at 3 seconds
       Commands.runOnce(() -> drive.arcadeDrive(0, 0), drive),
-      new turnSimple(drive, 150, true)
+      new turnSimple(drive, 180, true)
         .alongWith(new ArmControlLoading(arm))
     );
   }

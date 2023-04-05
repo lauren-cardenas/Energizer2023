@@ -21,7 +21,7 @@ public class uClawPivot extends CommandBase {
     m_position = position;
     m_roller = roller;
 
-    addRequirements(pivot, roller);
+    addRequirements(roller);
   }
 
   // Called when the command is initially scheduled.
@@ -33,15 +33,19 @@ public class uClawPivot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_position == "Up"){
+    if(m_position == "In"){
       m_pivot.UclawPivotRun(SpeedConstants.mUClawPivotSpeed);
     }
+    else if (m_position == "Shoot")
+    {
+      m_pivot.UclawPivotRun(-SpeedConstants.mUClawPivotShootSpeed);
+    }
     else {
-      m_pivot.UclawPivotRun(-SpeedConstants.mUClawPivotSpeed);
+      m_pivot.UclawPivotRun(-SpeedConstants.mUClawPivotDownSpeed);
     }
 
     if(m_position == "Out"){
-      m_roller.UclawRollerRun(SpeedConstants.mUclawInSpeed);
+      m_roller.UclawRollerRun(-SpeedConstants.mUclawInSpeed);
     }
   }
 

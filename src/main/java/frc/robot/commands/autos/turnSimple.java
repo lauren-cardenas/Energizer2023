@@ -32,9 +32,9 @@ public class turnSimple extends CommandBase {
   @Override
   public void execute() {
     if(kDirection){
-      drive.arcadeDrive(0.0, AutoConstants.kAutoTurnSpeed);
-    } else{
       drive.arcadeDrive(0.0, -AutoConstants.kAutoTurnSpeed);
+    } else{
+      drive.arcadeDrive(0.0, AutoConstants.kAutoTurnSpeed);
     }
 
   }

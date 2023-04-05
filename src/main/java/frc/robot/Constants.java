@@ -44,14 +44,14 @@ public final class Constants {
 
     public static final double kRampTime = 0.1;
 
-    public static final double kCurrentLimit = 25;
-    public static final double kCurrentThreshold = 35;
-    public static final double kLimitTime = 2;
+    public static final double kCurrentLimit = 35;
+    public static final double kCurrentThreshold = 45;
+    public static final double kLimitTime = 1;
     public static final boolean kSupplyEnable = true;
-    public static final boolean kStatorEnable = true;
-    public static final double kStatorLimit = 25;
-    public static final double kStatorThreshold = 35;
-    public static final double kStatorTime = 3;
+    public static final boolean kStatorEnable = false;
+    public static final double kStatorLimit = 50;
+    public static final double kStatorThreshold = 60;
+    public static final double kStatorTime = 1;
 
   }
 
@@ -63,13 +63,13 @@ public final class Constants {
     public static final double kAutoLongDistance = 4;
     public static final double kAutoShortDistance = 2.5;
 
-    public static final double kLevelAngle = -7;
+    public static final double kLevelAngle = -3;
     public static final double kReverseClimbAngle = -10.0;
     public static final double kForwardClimbAngle = 10.0;
   }
   public static final class SpeedConstants{
     public static final double mturnSpeed = 0.7; //0.6;
-    public static final double driveSpeed = 0.9;
+    public static final double driveSpeed = 1;
     public static final double mHalfSpeed = 0.5;
 
     public static final double mLiftSpeed = 0.8; //0.6
@@ -78,10 +78,12 @@ public final class Constants {
     public static final double mVclawSpeed = 0.8;
     public static final double mVclawSpitSpeed = 0.25;
     public static final double mVclawCubeSpeed = 0.9;
-    public static final double mUclawInSpeed = 0.8;
-    public static final double mUclawSpitSpeed = 0.8;
-    public static final double mUclawSpitMidSpeed = 0.6;
-    public static final double mUClawPivotSpeed = 0.6;
+    public static final double mUclawInSpeed = 0.75;
+    public static final double mUclawSpitSpeed = 0.5; //.5 for high 
+    public static final double mUclawSpitMidSpeed = 0.3; // .3 for mid
+    public static final double mUClawPivotSpeed = 0.468;
+    public static final double mUClawPivotDownSpeed = 0.3;
+    public static final double mUClawPivotShootSpeed = 0.17;
   }
   public static final class MechConstants{
     // lift port 
@@ -101,9 +103,9 @@ public final class Constants {
     public static final int m_liftMidSwitch = 1;  
     public static final int m_liftInSwitch = 2;
     public static final int m_loadingSwitch = 6;
-    public static final int m_pivotDownSwitch = 7;
-    public static final int m_pivotUpSwitch = 9;
-    public static final int m_pivotShootSwitch = 8;
+    public static final int m_pivotDownSwitch = 8;
+    public static final int m_pivotUpSwitch = 7;
+    public static final int m_pivotShootSwitch = 9;
 
   }
 

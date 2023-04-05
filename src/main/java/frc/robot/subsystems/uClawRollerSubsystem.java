@@ -16,6 +16,8 @@ public class uClawRollerSubsystem extends SubsystemBase {
 
   public uClawRollerSubsystem() {
     m_Uclaw = new CANSparkMax(MechConstants.m_uClawRollerPort, MotorType.kBrushless);
+
+    m_Uclaw.setSmartCurrentLimit(30, 30);
   }
   @Override
   public void periodic() {
