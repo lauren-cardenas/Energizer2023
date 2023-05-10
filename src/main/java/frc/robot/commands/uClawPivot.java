@@ -44,9 +44,9 @@ public class uClawPivot extends CommandBase {
       m_pivot.UclawPivotRun(-SpeedConstants.mUClawPivotDownSpeed);
     }
 
-    if(m_position == "Out"){
-      m_roller.UclawRollerRun(-SpeedConstants.mUclawInSpeed);
-    }
+    // if(m_position == "Out"){
+    //   m_roller.UclawRollerRun(-SpeedConstants.mUclawInSpeed);
+    // }
   }
 
   // Called once the command ends or is interrupted.

@@ -44,8 +44,8 @@ public final class Constants {
 
     public static final double kRampTime = 0.1;
 
-    public static final double kCurrentLimit = 35;
-    public static final double kCurrentThreshold = 45;
+    public static final double kCurrentLimit = 30;
+    public static final double kCurrentThreshold = 40;
     public static final double kLimitTime = 1;
     public static final boolean kSupplyEnable = true;
     public static final boolean kStatorEnable = false;
@@ -79,8 +79,8 @@ public final class Constants {
     public static final double mVclawSpitSpeed = 0.25;
     public static final double mVclawCubeSpeed = 0.9;
     public static final double mUclawInSpeed = 0.75;
-    public static final double mUclawSpitSpeed = 0.5; //.5 for high 
-    public static final double mUclawSpitMidSpeed = 0.3; // .3 for mid
+    public static final double mUclawSpitSpeed = 0.8; //.5 for high 
+    public static final double mUclawSpitMidSpeed = 0.5; // .3 for mid
     public static final double mUClawPivotSpeed = 0.468;
     public static final double mUClawPivotDownSpeed = 0.3;
     public static final double mUClawPivotShootSpeed = 0.17;

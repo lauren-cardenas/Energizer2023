@@ -22,7 +22,7 @@ public class ArmControlLoading extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_arm.armRun(SpeedConstants.mArmSpeed); //initializes by setting arm speed down
+    m_arm.armRun(0.85); //initializes by setting arm speed down
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -31,7 +31,7 @@ public class ArmControlLoading extends CommandBase {
     if(m_arm.getStatusDown() == false){
       m_arm.armRun(-SpeedConstants.mArmSpeed); //changes arm speed to up if down hit
     } else if(m_arm.getStatusUp() == false){
-      m_arm.armRun(SpeedConstants.mArmSpeed); //changes arm speed to down if top hit
+      m_arm.armRun(0.7); //changes arm speed to down if top hit
     }
 
   }
